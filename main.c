@@ -1,13 +1,11 @@
 /******************************************************************************
-
                             Online C Compiler.
                 Code, Compile, Run and Debug C program online.
 Write your code in this editor and press "Run" button to compile and execute it.
-
 *******************************************************************************/
 
 #include <stdio.h>
-
+#include <string.h>
 
 #define Maske_Q1  1 // Motorbits von Achse 0
 
@@ -200,7 +198,7 @@ void Setting_Max_Min_Counter(int *counter_axis, int Axis, int maximum, int minim
     
 }
 
-Init_Zeros(int rows, int columns, int TwoDimArray[MAX_ROWS][MAX_COLUMNS])
+void Init_Zeros(int rows, int columns, int TwoDimArray[MAX_ROWS][MAX_COLUMNS])
 {
     for(int outside=0; outside<rows; outside++)
     {
@@ -211,7 +209,7 @@ Init_Zeros(int rows, int columns, int TwoDimArray[MAX_ROWS][MAX_COLUMNS])
     }
 }
 
-Print_Array(int rows, int columns, int TwoDimArray[MAX_ROWS][MAX_COLUMNS])
+void Print_Array(int rows, int columns, int TwoDimArray[MAX_ROWS][MAX_COLUMNS])
 {
     for(int outside=0; outside<rows; outside++)
     {
@@ -224,7 +222,7 @@ Print_Array(int rows, int columns, int TwoDimArray[MAX_ROWS][MAX_COLUMNS])
     }
 }
 
-Allocate_New_Position(int columns, int TwoDimArray[MAX_ROWS][MAX_COLUMNS], int Counter_Used_Positions, int Teaching_Array[MAX_COLUMNS])
+void Allocate_New_Position(int columns, int TwoDimArray[MAX_ROWS][MAX_COLUMNS], int Counter_Used_Positions, int Teaching_Array[MAX_COLUMNS])
 {
     for(int inner=0; inner<columns; inner++)
     {
@@ -252,6 +250,8 @@ int check_existance_positions(int rows, int columns, int TwoDimArray[MAX_ROWS][M
     return result;
 }
 
+
+
 int main()
 {
     
@@ -267,6 +267,7 @@ int main()
     int counter_axis[] = {2,3,4,5}; //these are our Ritzel counter for each axis
     int Counter_Used_Positions = 0; //We use this to check how many positions we have left when we save the values after teaching
     int Current_Row_Counter = 0;    //We use this value to check how many times we need to read the "teaching" values so we can repeat it
+    int eternal_counter = 0;
     
     int is_knickarm = 1; //if is_knickarm = 1 then we are using knickarm, otherwise we are using saulen
     int Is_Increament = 1; // if Is_Increament = 1 we are going to Increase the Ritzel Counter, otherwhise we are decreasing it
@@ -282,6 +283,7 @@ int main()
     
     
     char ch; //We use this value when simulating our Input Data
+    
     
     //uint8 Ritzel_Achse[] = {1,2,4,8};  //Here we define the Ritzel_Achse for each axis, also axis_0 = 1, and so on....
     //uint8 Nullanschlag_Achse[] = {16,32,64,128}; //here we define the Nullanschlag for each axis, also axis_0 = 16 and so on...
@@ -359,11 +361,21 @@ int main()
             
             while(1)
             {
-                do 
-                {
+                //do 
+                //{
                 printf("Your choice: ");
-                ch = getchar();
-                } while(ch!='F' && ch!='B' && ch!='D' && ch!='U' && ch!='I' && ch!='A' && ch!='C' && ch!='O' && ch!='E' && ch!='S' && ch!='P' && ch!='R' && ch!='W');
+                if(eternal_counter!=0)
+                {
+                    scanf("%c", &ch);
+                    scanf("%c", &ch);
+                }
+                else
+                {
+                    scanf(" %c", &ch);
+                }
+                
+                //} while(ch!='F' && ch!='B' && ch!='D' && ch!='U' && ch!='I' && ch!='A' && ch!='C' && ch!='O' && ch!='E' && ch!='S' && ch!='P' && ch!='R' && ch!='W');
+
                 
                 switch(ch) 
                 {
@@ -470,7 +482,7 @@ int main()
                 break;
                   
                  
-                default:  printf("Default\n");
+                default:  printf("Invalid Input\n");
                   break;
               }
               
