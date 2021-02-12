@@ -267,7 +267,6 @@ int main()
     int counter_axis[] = {2,3,4,5}; //these are our Ritzel counter for each axis
     int Counter_Used_Positions = 0; //We use this to check how many positions we have left when we save the values after teaching
     int Current_Row_Counter = 0;    //We use this value to check how many times we need to read the "teaching" values so we can repeat it
-    int eternal_counter = 0;
     
     int is_knickarm = 1; //if is_knickarm = 1 then we are using knickarm, otherwise we are using saulen
     int Is_Increament = 1; // if Is_Increament = 1 we are going to Increase the Ritzel Counter, otherwhise we are decreasing it
@@ -364,16 +363,11 @@ int main()
                 //do 
                 //{
                 printf("Your choice: ");
-                if(eternal_counter!=0)
+                ch=getchar();
+                while(ch=='\n')
                 {
-                    scanf("%c", &ch);
-                    scanf("%c", &ch);
+                    ch=getchar();
                 }
-                else
-                {
-                    scanf(" %c", &ch);
-                }
-                
                 //} while(ch!='F' && ch!='B' && ch!='D' && ch!='U' && ch!='I' && ch!='A' && ch!='C' && ch!='O' && ch!='E' && ch!='S' && ch!='P' && ch!='R' && ch!='W');
 
                 
