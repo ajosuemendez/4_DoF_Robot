@@ -41,6 +41,7 @@ const int MAX_COLUMNS = 4;
     int is_knickarm = 1; //if is_knickarm = 1 then we are using knickarm, otherwise we are using saulen
     int Is_Increament = 1; // if Is_Increament = 1 we are going to Increase the Ritzel Counter, otherwhise we are decreasing it
     int Flag_last_saved = 1; //we use this variable to check if a specific coordinate was already "teach"
+
     
     int maximum[] = {6,6,6,6}; //maximums counters for every axis
     int minimum[] = {0,0,0,0}; //minimums "" "" "" ""
@@ -49,6 +50,8 @@ const int MAX_COLUMNS = 4;
     int multiple_positions[MAX_ROWS][MAX_COLUMNS]; //Here we declare a 2D-Array where we are going to save all the coordinates from teaching
     
     char ch; //We use this value when simulating our Input Data
+    char good_ch;
+    int good_ch_int;
     
     //uint8 Ritzel_Achse[] = {1,2,4,8};  //Here we define the Ritzel_Achse for each axis, also axis_0 = 1, and so on....
     //uint8 Nullanschlag_Achse[] = {16,32,64,128}; //here we define the Nullanschlag for each axis, also axis_0 = 16 and so on...
@@ -251,12 +254,12 @@ void Print_Array(int rows, int columns, int TwoDimArray[MAX_ROWS][MAX_COLUMNS])
   int outside, inner;
     for( outside=0; outside<rows; outside++)
     {
-        Serial.println("[");
+        Serial.print("[");
         for( inner=0; inner<columns; inner++)
         {
-// ***            Serial.println("%i", TwoDimArray[outside][inner]);
+           Serial.print(TwoDimArray[outside][inner]);
         }
-        Serial.println("]\n");
+        Serial.print("]\n");
     }
 }
 
@@ -290,6 +293,7 @@ int check_existance_positions(int rows, int columns, int TwoDimArray[MAX_ROWS][M
     result = 0;
     return result;
 }
+
 
 // arduino startup
 void setup() {
@@ -382,8 +386,8 @@ void loop()
                 
             case 4: //STATE_TEACHING_NEW_POSITIONS
             
-            Serial.println("\nDo you want to (Enter first letter):\n");
-            Serial.println("Go (F)orward, (B)ackwards, (D)own, (U)p, (I)n Clock, (A)gainst Clock, (C)lose, (O)pen, (E)xit, (P)rint, (R)eset, (S)ave, (W)ieder?\n");
+            Serial.println("\nDo you want to (Enter Number):\n");
+            Serial.println("Go (1)Forward, (2)Backwards, (3)Down, (4)Up, (5)In Clock, (6)Against Clock, (7)Close, (8)Open,(9)Save, (10)Print, (11)Reset, (12)Exit, (13)Wieder?\n");
 //Schieber
 //(F)orward, 
 //(B)ackwards, 
@@ -416,22 +420,29 @@ void loop()
 //(W)ieder?\n"
             while(1)
             {
-                do 
-                {
-                Serial.println("Your choice: ");
-                // geaendert
-                //ch = getchar();
-
-                // go next only when you receive data:
-                  do
-                  {
-                  // read the incoming byte:
-                  ch = Serial.read();
-                  }
-                  while(!(Serial.available() > 0)); 
-                } while(ch!='F' && ch!='B' && ch!='D' && ch!='U' && ch!='I' && ch!='A' && ch!='C' && ch!='O' && ch!='E' && ch!='S' && ch!='P' && ch!='R' && ch!='W');
-                
-                switch(ch) 
+                  Serial.print("Your Choice: ");
+                  while(Serial.available() == 0){}
+                  
+                      // read the incoming byte:
+                      ch = Serial.read();
+    
+                      if(ch == '\n'){}
+                      
+                      else
+                      {
+                        good_ch = ch;
+                        
+                        Serial.println(good_ch);
+                         
+                      }
+               
+                    
+                  
+                  //}while(!(Serial.available() > 0)); 
+                //} while(ch!='F' && ch!='B' && ch!='D' && ch!='U' && ch!='I' && ch!='A' && ch!='C' && ch!='O' && ch!='E' && ch!='S' && ch!='P' && ch!='R' && ch!='W');
+                  
+                  
+                switch(good_ch) 
                 {
                 case 'F': //Forwards
                     goto Increment_counter_Axis_1;
@@ -553,7 +564,7 @@ void loop()
                 break;
                   
                  
-                default:  Serial.println("Default\n");
+                default:  Serial.println("Invalid Input\n");
                   break;
               }
               
